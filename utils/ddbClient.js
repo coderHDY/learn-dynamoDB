@@ -20,22 +20,34 @@ const https = require('https');
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { NodeHttpHandler } = require("@aws-sdk/node-http-handler");
 // Set the AWS Region.
-const REGION = "ap-northeast-1"; //e.g. "us-east-1"
+// const REGION = "ap-northeast-1"; //e.g. "us-east-1"
+// const REGION = "us-east-1"; //e.g. "us-east-1"
+const REGION = "ap-east-1"; //e.g. "us-east-1"
 
 const agent = new https.Agent({
   maxSockets: 25
 });
 const ddbClient = new DynamoDBClient({
-  region: REGION ,
+  region: REGION,
+
+  // 长连接，提速
   httpOptions: {
     agent: new https.Agent({
       rejectUnauthorized: true,
       keepAlive: true
-    })
+    }),
+    connectTimeout: 5000,
+    timeout: 5000
   },
+
+  // 选取配置文件
   credentials: fromIni({profile: 'default'}),
   requestHandler: new NodeHttpHandler({
     httpsAgent: agent
   }),
+
+  // 超时配置
+  connectionTimeout: 5000,
+  socketTimeout: 5000,
 });
 module.exports =  { ddbClient };

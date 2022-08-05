@@ -1,5 +1,5 @@
 const  { CreateTableCommand } = require("@aws-sdk/client-dynamodb");
-const { ddbClient } = require("../utils/ddbClient.js");
+const { ddbClient } = require("../../utils/ddbClient.js");
 
 /* example */
 // const params = {
@@ -41,8 +41,7 @@ const { ddbClient } = require("../utils/ddbClient.js");
 
 module.exports.createTable = async (req, res) => {
   console.log(req.body);
-  console.log(typeof req.body);
-  const configPms = req.body;
+  const configPms = req.body; 
   const { TableName, AttributeDefinitions, KeySchema } = configPms;
   const params = {
     TableName,

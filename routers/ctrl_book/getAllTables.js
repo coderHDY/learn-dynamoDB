@@ -1,13 +1,13 @@
 
-const { DynamoDBClient, ListTablesCommand } = require("@aws-sdk/client-dynamodb");
+const { ListTablesCommand } = require("@aws-sdk/client-dynamodb");
+const { ddbDocClient } = require("../../utils/ddbDocClient.js");
 
 module.exports.getAllTables = async (req, res) => {
-    const client = new DynamoDBClient({ region: "ap-northeast-1" });
     const command = new ListTablesCommand({});
     const start = Date.now();
     console.log("get all tables start!");
     try {
-      const results = await client.send(command);
+      const results = await ddbDocClient.send(command);
       console.log(results.TableNames.join("\n"));
       res.send(results)
     } catch (err) {

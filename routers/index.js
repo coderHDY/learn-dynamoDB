@@ -1,44 +1,28 @@
-const { createTable } = require('./create');
-const { addBook } = require('./addBook');
-const { getBook } = require('./getBook');
-const { getAllTables } = require('./getAllTables');
+const { createTable } = require('./ctrl_book/createTable');
+const { addBook } = require('./ctrl_book/addBook');
+const { getBookByKey } = require('./ctrl_book/getBookByKey');
+const { getAllTables } = require('./ctrl_book/getAllTables');
+const { deleteTable } = require('./ctrl_book/deleteTable');
+const { delBook } = require('./ctrl_book/delBook');
+const { queryBooks } = require('./ctrl_book/queryBooks');
+const { scanBooks } = require('./ctrl_book/scanBooks2');
+
+
+const { addBookList } = require("./ctrl_booklist/addBookList");
+
+const { batchGetItem } = require('./ctrl_booklist/batchGetItem');
 
 module.exports = (app) => {
   app.post('/createTable', createTable);
   app.post('/addBook', addBook);
-  app.get('/getBook', getBook);
+  app.get('/getBookByKey', getBookByKey);
   app.get('/getAllTables', getAllTables);
+  app.post('/deleteTable', deleteTable);
+  app.post('/delBook', delBook);
+  app.get('/queryBooks', queryBooks);
+  app.get('/scanBooks', scanBooks);
+  
+  app.post('/addBookList', addBookList);
+
+  app.get('/batchGetItem', batchGetItem);
 }
-
-
-// const { DynamoDBClient, ListTablesCommand } = require("@aws-sdk/client-dynamodb");
-// (async () => {
-//   console.log("get");
-//   const client = new DynamoDBClient({ region: "ap-northeast-1" });
-//   const command = new ListTablesCommand({});
-//   const start = Date.now();
-//   console.log("get all tables start!");
-//   try {
-//     const results = await client.send(command);
-//     console.log(results.TableNames.join("\n"));
-//   } catch (err) {
-//     console.error(err);
-//   } finally {
-//     const time = Date.now() - start;
-//     console.log("get all tables time: ", time);
-//   }
-// })();
-
-const  { ListTablesCommand } = require("@aws-sdk/client-dynamodb");
-const { ddbClient } = require("../utils/ddbClient.js");
-
-(async () => {
-  console.log('get start');
-  const command = new ListTablesCommand({});
-  try {
-    const results = await ddbClient.send(command);
-    console.log(results.TableNames.join("\n"));
-  } catch (err) {
-    console.error(err);
-  }
-})();

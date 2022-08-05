@@ -1,6 +1,6 @@
 
 const { PutCommand } = require("@aws-sdk/lib-dynamodb");
-const { ddbDocClient } = require("../utils/ddbDocClient.js");
+const { ddbDocClient } = require("../../utils/ddbDocClient.js");
 
 /* example */
 // TableName: "Books",
@@ -18,12 +18,12 @@ const { ddbDocClient } = require("../utils/ddbDocClient.js");
 /* example */
 
 module.exports.addBook = async (req, res) => {
-  const {TableName, _id, name, author, num,  description, mother, father} = req.query;
+  const {TableName, _id, BookName, author, num,  description, mother, father} = req.query;
   const params = {
     TableName,
     Item: {
       _id,
-      name,
+      BookName,
       author,
       num,
       description,
@@ -43,6 +43,17 @@ module.exports.addBook = async (req, res) => {
   } catch(e) {
     console.log('error:', e);
   } finally {
-    console.log((Date.now() - start) / 1000);
+    console.log("add book success: ", (Date.now() - start) / 1000);
   }
 }
+
+
+/* 创建，如果有同名主键会更改 */
+// {
+//   "$metadata": {
+//       "httpStatusCode": 200,
+//       "requestId": "D4EU116PJ4DNOK128C0TOKV637VV4KQNSO5AEMVJF66Q9ASUAAJG",
+//       "attempts": 1,
+//       "totalRetryDelay": 0
+//   }
+// }
