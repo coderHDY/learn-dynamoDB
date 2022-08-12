@@ -14,15 +14,16 @@ const { ddbClient } = require("../../utils/ddbClient.js");
 
 /* 只能用分区键进行查询 */
 /* 【 _ 】是关键字，需要用别名 */
-module.exports.scanBooks = async (req, res) => {
-  const { TableName, FilterExpression, ExpressionAttributeValues, ExpressionAttributeNames, ProjectionExpression }= req.query;
+module.exports.scanBooks2 = async (req, res) => {
+  const { FilterExpression, ExpressionAttributeValues, ExpressionAttributeNames, ProjectionExpression }= req.query;
   const params = {
     TableName: "Books",
     FilterExpression,
-    ExpressionAttributeValues: JSON.parse(ExpressionAttributeValues),
-    ExpressionAttributeNames: JSON.parse(ExpressionAttributeNames),
+    // ExpressionAttributeValues: JSON.parse(ExpressionAttributeValues),
+    // ExpressionAttributeNames: JSON.parse(ExpressionAttributeNames),
   };
   if (ExpressionAttributeNames) params.ExpressionAttributeNames = JSON.parse(ExpressionAttributeNames);
+  if (ExpressionAttributeValues) params.ExpressionAttributeValues = JSON.parse(ExpressionAttributeValues);
   console.log(params);
   const start = Date.now();
   try {

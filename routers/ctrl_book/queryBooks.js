@@ -7,6 +7,7 @@ const { ddbClient } = require("../../utils/ddbClient.js");
 //   ExpressionAttributeValues: {
 //     ":s": { S: "Acme Band" },
 //   },
+//   // 投影
 //   ProjectionExpression: "Artist, SongTitle, Awards",
 //   TableName: "Music",
 // };

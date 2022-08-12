@@ -47,7 +47,7 @@ module.exports.createTable = async (req, res) => {
     TableName,
     AttributeDefinitions,
     KeySchema,
-    ProvisionedThroughput: {
+    ProvisionedThroughput: { // 每秒需对此表执行的读取和写入次，以后可以用updataTable更改
       ReadCapacityUnits: 1,
       WriteCapacityUnits: 1,
     },
